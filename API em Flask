@@ -1,0 +1,33 @@
+from flask import Flask, jsonify, request
+from flask_mysqldb import MySQL
+
+app = Flask(__name__)
+
+# Configuração do MySQL
+app.config['MYSQL_HOST'] = 'host_do_seu_banco'
+app.config['MYSQL_USER'] = 'seu_usuario'
+app.config['MYSQL_PASSWORD'] = 'sua_senha'
+app.config['MYSQL_DB'] = 'nome_do_seu_banco_de_dados'
+
+mysql = MySQL(app)
+
+# Endpoint para listar todos os bancos
+@app.route('/bancos', methods=['GET'])
+def listar_bancos():
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM bancos")
+    bancos = cursor.fetchall()
+    cursor.close()
+    return jsonify(bancos)
+
+# Endpoint para consultar um banco pelo código de compensação
+@app.route('/bancos/<codigo>', methods=['GET'])
+def consultar_banco(codigo):
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM bancos WHERE codigo_compensacao = %s", (codigo,))
+    banco = cursor.fetchone()
+    cursor.close()
+    return jsonify(banco)
+
+if __name__ == '__main__':
+    app.run(debug=True)
