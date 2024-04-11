@@ -4,10 +4,10 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 
 # Configuração do MySQL
-app.config['MYSQL_HOST'] = 'host_do_seu_banco'
-app.config['MYSQL_USER'] = 'seu_usuario'
-app.config['MYSQL_PASSWORD'] = 'sua_senha'
-app.config['MYSQL_DB'] = 'nome_do_seu_banco_de_dados'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'revgas'
+app.config['MYSQL_PASSWORD'] = '12345678'
+app.config['MYSQL_DB'] = 'bancos_revgas'
 
 mysql = MySQL(app)
 
